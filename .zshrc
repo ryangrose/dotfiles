@@ -109,7 +109,9 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Add alias for opening result in vim
-alias vf='vim "$(fzf)"'
+# Checks if an actual match was found before launching vim
+# Outputs file name to stdout for easy copying in later actions
+alias vf='LAST_FILE="$(fzf)" && [[ -n $LAST_FILE ]] && echo $LAST_FILE && vim $LAST_FILE'
 
 # My aliases
 alias v='vim'
