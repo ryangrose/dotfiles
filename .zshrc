@@ -1,173 +1,138 @@
-# Import colorscheme from 'wal'
-# &   # Run the process in the background.
-# ( ) # Hide shell job control messages.
-# (wal -r -t &)
-# (wal -R -q --vte)
+#############################
+#          _                #
+#  _______| |__  _ __ ___   #
+# |_  / __| '_ \| '__/ __|  #
+#  / /\__ | | | | | | (__   #
+# /___|___|_| |_|_|  \___|  #
+#                           #
+#############################
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Path to oh-my-zsh-installation
+export ZSH="$HOME/.oh-my-zsh"
 
-# Path to your oh-my-zsh installation.
-  export ZSH=/home/ryan/.oh-my-zsh
+# Set name of zsh theme to load
+# See https://github.com/robbyrussel/oh-my-zsh/wiki/Themes
+export ZSH_THEME="powerlevel10k/powerlevel10k"
+# export plugins=(poetry zsh-autosuggestions zsh-z zsh-syntax-highlighting)
+export plugins=(poetry zsh-autosuggestions zsh-syntax-highlighting zsh-z)
+source "$ZSH/oh-my-zsh.sh"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Disable terminal noises
+unsetopt BEEP
+set bell-style none
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Powerline install:
-# https://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin
-if [[ -r ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh ]]; then
-    source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-fi      
-
-# Virtualenvwrapper (for python/django)
-# export WORKON_HOME=$HOME/.virtualenvs
-# export PROJECT_HOME=$HOME/Devel
-# export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-# source /usr/local/bin/virtualenvwrapper_lazy.sh
-
-# fzf: Fuzzy Finding tool
+# fzf: fuzzy finding tool
 #
+
 # Source fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Add alias for opening result in vim
-# Checks if an actual match was found before launching vim
-# Outputs file name to stdout for easy copying in later actions
-alias vf='LAST_FILE="$(fzf)" && [[ -n $LAST_FILE ]] && echo $LAST_FILE && vim $LAST_FILE'
-
-# My aliases
-alias v='vim'
-alias c='clear'
-alias agi='sudo apt-get install'
-alias untar='tar -xsvf'
-alias zshrc='vim ~/.zshrc'
-alias vimrc='vim ~/.vimrc'
-alias music='ncmpcpp'
-alias open='xdg-open'
-alias of='xdg-open "$(fzf)"'  # Use fzf and xdg-open to find and open anything
-alias diff='colordiff'
-
-alias pytohn=python
-alias pytohn3=python3
-
-alias checkin='runghc /home/ryan/git/check-script/check.hs' # Print the checkins or give an argument to record
-
-# For todo.sh
-# alias t="~/Dropbox/todo/todo.sh -d ~/Dropbox/todo/todo.cfg" 
-# alias tv="vim ~/Dropbox/todo/todo.txt"
-# alias todo="~/Dropbox/todo/todo.sh -d ~/Dropbox/todo/todo.cfg" 
-# PATH=$PATH:"/path/to/your/todo/scripts"
-# complete -F _todo t
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 
-# Make config a command for dotfiles on a git repo
-alias config='/usr/bin/git --git-dir=/home/ryan/.cfg/ --work-tree=/home/ryan'
-# alias attu="ssh rgrose@attu.cs.washington.edu"
+#
+# awscli autocomplete
+#
+# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html#cli-command-completion-linux
+complete -C $(which aws_completer) aws
 
-# Node Version Manager
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# pywal
-export PATH="${PATH}:${HOME}/.local/bin/"
 
-# Add cabal to path
-export PATH=$PATH:"/home/ryan/.cabal/bin"
+# Git autocomplete
+if [[ ! -f ~/.zsh/git-completion.zsh ]]
+then
+    # Download the scripts
+    mkdir -p ~/.zsh
+    curl -o ~/.zsh/git-completion.zsh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+    curl -o ~/.zsh/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+fi
+zstyle ':completion:*:git:*' script ~/.zsh/git-completion.zsh
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit && compinit
 
-# Mobile Development
-## Android Studio/Flutter
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH="$PATH:$ANDROID_HOME/tools"
-export PATH=$PATH:$ANDROID_HOME/platform-tool
-alias androidstudio=/opt/android-studio/bin/studio.sh
-export PATH=$PATH:"/home/ryan/curie/.development/flutter/bin"
-source /etc/profile.d/gradle.sh
+#
+# my stuff
+#
 
-# Source nix
-. ~/.nix-profile/etc/profile.d/nix.sh
+# Source other scripts, like aliases
+source ~/.zsh/aliases
 
-# MSSQL
-export PATH="$PATH:/opt/mssql-tools/bin"
+# change find: cd to a fzf directory
+cf() {
+    _VAR=$(fzf)
+    cd "$(dirname _VAR)"
+}
 
-# FZF TODO
-# df(dir_name) = dir_name/$(ls dir_name | fzf)
-alias dnd='cd ~/Documents/dnd'
+vf() {
+    LAST_FILE="$(fzf)"
+    [[ -n $LAST_FILE ]] && echo "$LAST_FILE" && vim "$LAST_FILE"
+}
+# open last result in vim
+alias lf='vim $LAST_FILE'
+
+# git find add: find modified files in fzf, git add
+gfa() {
+    _files_to_add="$(git status --short | awk '{ print $2 }' | fzf --multi )"
+    [[ -n $_files_to_add ]] && echo "git add $_files_to_add" && git add $_files_to_add
+}
+
+s3ls() {
+    aws s3 ls $1 | awk '{ if($NF == "") print $(NF - 1); else $NF }'
+}
+
+# recursively fzf in s3 bucket, print s3 url
+fs3() {
+    if [[ -n $1 ]]
+    then
+        RESULT=$1
+    else
+        RESULT="s3://$(fzf < ~/.config/buckets.txt)"
+    fi
+    FOUND_PATH=$RESULT
+    while [[ -n "$RESULT" ]]
+    do
+        RESULT=$(s3ls $FOUND_PATH | fzf)
+        FOUND_PATH="$FOUND_PATH$RESULT"
+        if [[ $RESULT != */ ]]
+        then
+            RESULT=""
+        fi
+    done
+    echo $FOUND_PATH
+}
+
+# find and download a file in s3
+ds3() {
+    if [[ -n $1 ]]
+    then
+        s3path=$1
+    else
+        s3path=$(fs3)
+    fi
+    aws s3 cp $s3path .
+}
+
+# switch between aws profiles found in ~/.aws/credentials
+switch_aws_profile() {
+    if [[ -n $1 ]]
+    then
+        export AWS_PROFILE=$1
+    else
+        export AWS_PROFILE=$(grep '\[.*\]' < ~/.aws/credentials | sed 's/\[\(.*\)\]/\1/g' | fzf )
+    fi
+    echo $AWS_PROFILE
+    aws sts get-caller-identity
+}
