@@ -1,0 +1,10 @@
+alias v='vim'
+alias c='clear'
+alias untar='tar -xsvf'
+alias zshrc='vim ~/.zshrc && source ~/.zshrc'
+alias vimrc='vim ~/.vimrc'
+alias addex="sudo chmod a+rwx"
+alias lf='vim $LAST_FILE'
+alias ipy='ipython3'
+alias pytohn='python'
+alias ls='lsd'
