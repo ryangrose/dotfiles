@@ -50,7 +50,6 @@ export FZF_DEFAULT_OPTS="--preview 'bat --color=always --style=numbers --line-ra
 complete -C $(which aws_completer) aws
 
 
-
 # Git autocomplete
 if [[ ! -f ~/.zsh/git-completion.zsh ]]
 then
@@ -85,12 +84,13 @@ alias lf='vim $LAST_FILE'
 
 # git find add: find modified files in fzf, git add
 gfa() {
-    _files_to_add="$(git status --short | awk '{ print $2 }' | fzf --multi )"
+    _files_to_add="$(git status --short | awk '{ print $2 }' | fzf --multi --preview='git diff {}')"
     [[ -n $_files_to_add ]] && echo "git add $_files_to_add" && git add $_files_to_add
 }
 
 s3ls() {
-    aws s3 ls $1 | awk '{ if($NF == "") print $(NF - 1); else $NF }'
+    # Remove trailing spaces before printing the last file
+    aws s3 ls $@ | awk '{gsub(/^ +| +$/,"")} { print $NF }'
 }
 
 # recursively fzf in s3 bucket, print s3 url
@@ -99,12 +99,17 @@ fs3() {
     then
         RESULT=$1
     else
-        RESULT="s3://$(fzf < ~/.config/buckets.txt)"
+        _bucket=$(s3ls "" | fzf --preview="aws s3 ls {}/")
+        if [[ -z $_bucket ]]
+        then
+            return 1
+        fi
+        RESULT="s3://${_bucket}/"
     fi
     FOUND_PATH=$RESULT
     while [[ -n "$RESULT" ]]
     do
-        RESULT=$(s3ls $FOUND_PATH | fzf)
+        RESULT=$(s3ls $FOUND_PATH | fzf --preview="aws s3 ls $FOUND_PATH{}")
         FOUND_PATH="$FOUND_PATH$RESULT"
         if [[ $RESULT != */ ]]
         then
@@ -136,3 +141,4 @@ switch_aws_profile() {
     echo $AWS_PROFILE
     aws sts get-caller-identity
 }
+
