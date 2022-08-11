@@ -63,11 +63,18 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit && compinit
 
 #
+# pip
+#
+# add binaries to path
+export PATH="$PATH:/Users/ryangrose/Library/Python/3.8/bin"
+eval "$(register-python-argcomplete pipx)"
+
+#
 # my stuff
 #
 
 # Source other scripts, like aliases
-source ~/.zsh/aliases
+source ~/.zsh/aliases.sh
 
 # change find: cd to a fzf directory
 cf() {
@@ -84,8 +91,15 @@ alias lf='vim $LAST_FILE'
 
 # git find add: find modified files in fzf, git add
 gfa() {
-    _files_to_add="$(git status --short | awk '{ print $2 }' | fzf --multi --preview='git diff {}')"
-    [[ -n $_files_to_add ]] && echo "git add $_files_to_add" && git add $_files_to_add
+    _files_to_add="$(git status --short | awk '{ print $2 }' | fzf --multi --preview='git diff --color {} | delta')"
+    if [[ -n $_files_to_add ]]
+    then 
+        while read file
+        do
+            git add $file
+            echo $file
+        done
+    fi
 }
 
 s3ls() {
@@ -142,3 +156,6 @@ switch_aws_profile() {
     aws sts get-caller-identity
 }
 
+# Created by `pipx` on 2022-07-31 21:14:20
+export PATH="$PATH:/Users/ryangrose/.local/bin"
+export PATH="/Users/ryangrose/Library/Python/3.9/bin:$PATH"
